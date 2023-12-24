@@ -8,7 +8,7 @@
  */
 function basePath($path = '')
 {
-  return __DIR__ . '/' . $path;
+    return __DIR__ . '/' . $path;
 }
 
 /**
@@ -18,15 +18,16 @@ function basePath($path = '')
  * @return void
  *
  */
-function loadView($name)
+function loadView($name, $data = [])
 {
-  $viewPath = basePath("views/{$name}.view.php");
+    $viewPath = basePath("views/{$name}.view.php");
 
-  if (file_exists($viewPath)) {
-    require $viewPath;
-  } else {
-    echo "View '{$name} not found!'";
-  }
+    if (file_exists($viewPath)) {
+        extract($data);
+        require $viewPath;
+    } else {
+        echo "View '{$name} not found!'";
+    }
 }
 
 
@@ -39,13 +40,13 @@ function loadView($name)
  */
 function loadPartial($name)
 {
-  $partialPath = basePath("views/partials/{$name}.php");
+    $partialPath = basePath("views/partials/{$name}.php");
 
-  if (file_exists($partialPath)) {
-    require $partialPath;
-  } else {
-    echo "Partial '{$name} not found!'";
-  }
+    if (file_exists($partialPath)) {
+        require $partialPath;
+    } else {
+        echo "Partial '{$name} not found!'";
+    }
 }
 
 /**
@@ -56,9 +57,9 @@ function loadPartial($name)
  */
 function inspect($value)
 {
-  echo '<pre>';
-  var_dump($value);
-  echo '</pre>';
+    echo '<pre>';
+    var_dump($value);
+    echo '</pre>';
 }
 
 /**
@@ -69,7 +70,18 @@ function inspect($value)
  */
 function inspectAndDie($value)
 {
-  echo '<pre>';
-  die(var_dump($value));
-  echo '</pre>';
+    echo '<pre>';
+    die(var_dump($value));
+    echo '</pre>';
+}
+
+/**
+ * Format salary
+ *
+ * @param string $salary
+ * @return string Formatted Salary
+ */
+function formatSalary($salary)
+{
+    return '$' . number_format(floatval($salary));
 }
