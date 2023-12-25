@@ -15,11 +15,11 @@ class ListingController
         $this->db = new Database($config);
     }
 
-    /*
-   * Show all listings
-   *
-   * @return void
-   */
+    /**
+     * Show all listings
+     *
+     * @return void
+     */
     public function index()
     {
         $listings = $this->db->query('SELECT * FROM listings')->fetchAll();
@@ -29,21 +29,22 @@ class ListingController
         ]);
     }
 
-    /*
-   * Show the create listing form
-   *
-   * @return void
-   */
+    /**
+     * Show the create listing form
+     *
+     * @return void
+     */
     public function create()
     {
         loadView('listings/create');
     }
 
-    /*
-   * Show a single listing
-   *
-   * @return void
-   */
+    /**
+     * Show a single listing
+     *
+     * @param array $params
+     * @return void
+     */
     public function show($params)
     {
         $id = $params['id'] ?? '';
@@ -124,5 +125,31 @@ class ListingController
 
             redirect('/listings');
         }
+    }
+
+    /**
+     * Delete a listing
+     *
+     * @param array $params
+     * @return void
+     */
+    public function destroy($params)
+    {
+        $id = $params['id'];
+
+        $params = [
+            'id' => $id
+        ];
+
+        $listing = $this->db->query('SELECT * FROM listings WHERE id = :id', $params)->fetch();
+
+        if (!$listing) {
+            ErrorController::notFound('Listing not found');
+            return;
+        }
+
+        $this->db->query('DELETE FROM listings WHERE id = :id', $params);
+
+        redirect('/listings');
     }
 }
