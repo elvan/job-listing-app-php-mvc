@@ -2,7 +2,7 @@
 
 namespace Framework;
 
-use App\Controllers\ErrorController;
+use App\controllers\ErrorController;
 use Framework\Middleware\Authorize;
 
 class Router
@@ -138,7 +138,7 @@ class Router
                         (new Authorize())->handle($middleware);
                     }
 
-                    $controller = 'App\\Controllers\\' . $route['controller'];
+                    $controller = 'App\\controllers\\' . $route['controller'];
                     $controllerMethod = $route['controllerMethod'];
 
                     // Instatiate the controller and call the method
