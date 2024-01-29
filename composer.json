@@ -1,0 +1,11 @@
+{
+    "name": "elvan/job-listing-app-php-mvc",
+    "description": "Job listing application",
+    "authors": [],
+    "autoload": {
+        "psr-4": {
+            "Framework\\": "Framework/",
+            "App\\": "App/"
+        }
+    }
+}
