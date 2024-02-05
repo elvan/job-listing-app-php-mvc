@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Controllers\ErrorController;
 use Framework\Database;
 use Framework\Validation;
 
@@ -43,6 +42,7 @@ class ListingController
     /**
      * Show a single listing
      *
+     * @param array $params
      * @return void
      */
     public function show($params)
@@ -125,5 +125,34 @@ class ListingController
 
             redirect('/listings');
         }
+    }
+
+    /**
+     * Delete a listing
+     *
+     * @param array $params
+     * @return void
+     */
+    public function destroy($params)
+    {
+        $id = $params['id'];
+
+        $params = [
+            'id' => $id
+        ];
+
+        $listing = $this->db->query('SELECT * FROM listings WHERE id = :id', $params)->fetch();
+
+        if (!$listing) {
+            ErrorController::notFound('Listing not found');
+            return;
+        }
+
+        $this->db->query('DELETE FROM listings WHERE id = :id', $params);
+
+        // Set flash message
+        $_SESSION['success_message'] = 'Listing deleted successfully';
+
+        redirect('/listings');
     }
 }
